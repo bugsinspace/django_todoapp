@@ -1,0 +1,11 @@
+{% extends "todo/base.html" %}
+
+{% block content %}
+    <form class="form" method="POST" action="">
+        {% csrf_token %}
+            <p>Once you delete your account, there is no going back. Please be certain.</p>
+            <button type="submit" class="btn btn-danger" >Confirm</button>
+            <a href="{% url 'home' %}"><button type="button" class="btn btn-primary" >Cancal</button></a>
+    </form>
+
+{% endblock%}

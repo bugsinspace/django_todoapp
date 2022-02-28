@@ -1,0 +1,57 @@
+{% extends "todo/base.html" %}
+
+{% block content %}
+
+<style>
+    #pro_img {
+    width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+</style>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Update your profile</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <img src="{{user.setting.avatar.url}}" alt="avatar" id="pro_img"><br><br>
+                <div class="form-group">
+                    <label for="profile_pic">{{setting.avatar.label}}</label>
+                    <input type="file" name="{{setting.avatar.name}}" class="form-control" id="profile_pic" aria-describedby="usernameHelp" value="{{field.value}}">
+                </div>
+                {% for field in user_form%}
+                <div class="form-group">
+                    <h5>{{field.errors}}</h5>
+                    <label for="username">{{field.label}}</label>
+                    <input type="text" name="{{field.name}}" class="form-control" id="username" aria-describedby="usernameHelp" value="{{field.value}}">
+                </div>
+                {% endfor %}
+                <div class="form-group">
+                    <h5>{{setting.errors}}</h5>
+                    <label for="username">{{setting.bio.label}}</label>
+                    <input type="text" name="{{setting.bio.name}}" class="form-control" id="username" aria-describedby="usernameHelp" value="{{setting.bio.value}}">
+                </div>
+                <a class="btn btn-primary" href="{% url 'home' %}">Cancal</a>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </form>
+            <hr>
+            <h4>Change password</h4>
+            <hr>
+            <a href="{% url 'change_password' %}"><button type="button" class="btn btn-danger" >Pass page</button></a>
+            <hr>
+            <h4>Dangerous area</h4>
+            <hr>
+            <a href="{% url 'delete_account' %}"><button type="button" class="btn btn-danger" >Delete Account</button></a>
+        </div>
+    </div>
+{% endblock %}
