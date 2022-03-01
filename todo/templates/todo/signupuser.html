@@ -1,42 +1,58 @@
 {% extends "todo/base.html" %}
 
 {% block content %}
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-5">
-            <h2>Sign Up</h2>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-5">
-            {% if error %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endif %}
-            <form method="POST">
-                {% csrf_token %}
-                {% for field in form%}
-                <div class="form-group">
-                    <h5>{{field.errors}}</h5>
-                    
-                    {% if   'password' in field.name %}
-                    <label for="password">{{field.label}}</label>
-                    <input type="password" name="{{field.name}}" class="form-control" id="password" aria-describedby="usernameHelp" required>
-                    {% elif 'email' in field.name %}
-                    <label for="email">{{field.label}}</label>
-                    <input type="email" name="{{field.name}}" class="form-control" id="email" aria-describedby="usernameHelp" required>
-                    {% else%}
-                    <label for="username">{{field.label}}</label>
-                    <input type="text" name="{{field.name}}" class="form-control" id="text" aria-describedby="usernameHelp" required>
-                    {% endif %}
-                </div>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">Signup</button>
-            </form>
-            <hr>
-            <div class="text-center">
-                Do you already have an account? <a href="{% url 'loginuser' %}">Login here</a>
+{% load static %}
+{% load socialaccount %}
+
+<link rel="stylesheet" href="{% static 'styles/auth.css' %}">
+<section class="login-block">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="md-float-material form-material"  method="POST">
+                	{% csrf_token%}
+                    <div class="auth-box card">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="text-center heading">Signup</h3>
+
+                                    {% if error %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ error }}
+                                    </div>
+                                {% endif %}
+                                </div>
+                            </div>
+                            {% for field in form%}
+                            <h5>{{field.errors}}</h5>
+                            {% if   'password' in field.name %}
+                            	<div class="form-group form-primary"> <input type="password" class="form-control" name="{{field.name}}" placeholder="Password"  id="{{field.name}}" required> </div>
+                            {% elif 'email' in field.name %}
+                            	<div class="form-group form-primary"> <input type="text" class="form-control" name="{{field.name}}" value="" placeholder="Email" id="{{field.name}}" required> </div>
+                            {% elif 'username' in field.name %}
+                            	<div class="form-group form-primary"> <input type="text" class="form-control" name="{{field.name}}" placeholder="Display name" id="{{field.name}}" required> </div>
+                            {% elif 'first_name' in field.name %}
+                            	<div class="form-group form-primary"> <input type="text" class="form-control" name="{{field.name}}" placeholder="First name" id="{{field.name}}" required> </div>
+                            {% elif 'last_name' in field.name %}
+                            	<div class="form-group form-primary"> <input type="text" class="form-control" name="{{field.name}}" placeholder="Last name" id="{{field.name}}" required> </div>
+                            {% endif %}
+                            {% endfor %}
+                            <div class="row">
+                                <div class="col-md-12"> <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" name="submit" value="Signup Now">
+                                </div>
+                            </div>
+                            <div class="or-container">
+                                <div class="line-separator"></div>
+                                <div class="or-label">or</div>
+                                <div class="line-separator"></div>
+                            </div>
+                            <p class="text-inverse text-center">Already have an account? <a href="{% url 'loginuser' %}" data-abc="true">Login</a></p>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</section>
 {% endblock %}

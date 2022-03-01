@@ -24,7 +24,12 @@
             {% endif %}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+                {% if  user.socialaccount_set.all.0.get_avatar_url %}
+
+                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="avatar" id="pro_img"><br><br>
+                {% else %}
                 <img src="{{user.setting.avatar.url}}" alt="avatar" id="pro_img"><br><br>
+                {% endif %}
                 <div class="form-group">
                     <label for="profile_pic">{{setting.avatar.label}}</label>
                     <input type="file" name="{{setting.avatar.name}}" class="form-control" id="profile_pic" aria-describedby="usernameHelp" value="{{field.value}}">
@@ -42,7 +47,7 @@
                     <input type="text" name="{{setting.bio.name}}" class="form-control" id="username" aria-describedby="usernameHelp" value="{{setting.bio.value}}">
                 </div>
                 <a class="btn btn-primary" href="{% url 'home' %}">Cancal</a>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
             <hr>
             <h4>Change password</h4>
@@ -51,7 +56,7 @@
             <hr>
             <h4>Dangerous area</h4>
             <hr>
-            <a href="{% url 'delete_account' %}"><button type="button" class="btn btn-danger" >Delete Account</button></a>
+            <a href="{% url 'delete_account' %}"><button type="submit" class="btn btn-danger" >Delete Account</button></a>
         </div>
     </div>
 {% endblock %}

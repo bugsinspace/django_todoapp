@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from todo import views
 from django.conf.urls.static import static 
 from django.conf import settings
@@ -11,6 +11,7 @@ urlpatterns = [
     path('signup/', views.signupuser, name='signupuser'),
     path('logout/', views.logoutuser, name='logoutuser'),
     path('login/', views.loginuser, name='loginuser'),
+    path('accounts/', include('allauth.urls')),
     path('profile/<int:user_id>', views.settings, name='settings'),
     path('current/', views.current, name='currenttodos'),
     path('create/', views.createtodo, name='createtodo'),

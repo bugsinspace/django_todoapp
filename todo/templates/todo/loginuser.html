@@ -1,34 +1,50 @@
 {% extends "todo/base.html" %}
 
 {% block content %}
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-5">
-            <h2>Login</h2>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-5">
-            {% if error %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endif %}
-            <form  method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" class="form-control" id="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control" id="password">
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-            <hr>
-            <div class="text-center">
-                Need an account? <a href="{% url 'signupuser' %}">Sign Up here</a>
+{% load static %}
+{% load socialaccount %}
+
+<link rel="stylesheet" href="{% static 'styles/auth.css' %}">
+<section class="login-block">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="md-float-material form-material"  method="POST">
+                	{% csrf_token %}
+                    <div class="auth-box card">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3 class="text-center heading">Login</h3><br>
+                                    {% if error %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ error }}
+                                        </div>
+                                        {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group form-primary"> <input type="text" class="form-control" name="username"  placeholder="Username" id="username"> </div>
+                            <div class="form-group form-primary"> <input type="password" class="form-control" name="password" placeholder="Password"  id="password"> </div>
+
+                            <a href="{% url 'reset_password'%}">Forget Password?</a>
+                            <div class="row">
+                                <div class="col-md-12"> <input type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" name="submit" value="Login"> 
+                                </div>
+                            </div>
+                            <div class="or-container">
+                                <div class="line-separator"></div>
+                                <div class="or-label">or</div>
+                                <div class="line-separator"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="{% provider_login_url 'google' %}"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using Google</a> </div>
+                            </div> <br>
+                            <p class="text-inverse text-center">Need an account? <a href="{% url 'signupuser' %}" data-abc="true">Signup</a></p>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</section>
 {% endblock %}
