@@ -47,6 +47,11 @@ def logoutuser(request):
         return redirect('home')
 
 @login_required
+def profile(request, user_id):
+    user = User.objects.get(id=user_id)
+    return render (request, 'todo/profile.html', {'user':user})
+    
+@login_required
 def settings(request, user_id):
     user = request.user
     user_form = UserForm(instance=user)
@@ -57,7 +62,7 @@ def settings(request, user_id):
         if user_form.is_valid() and setting_form.is_valid():
             user_form.save()
             setting_form.save()
-            return  redirect('settings', user_id=user.id)
+            return  redirect('profile', user_id=user.id)
     context = {'user_form': user_form, 'setting':setting_form}
     return render(request, 'todo/settings.html', context)
 

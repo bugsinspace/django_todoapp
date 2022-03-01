@@ -1,0 +1,54 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+{% load static%}
+<link rel="stylesheet" href="{% static 'styles/profile.css' %}">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container bootstrap snippets bootdey">
+<div class="row">
+  <div class="profile-nav col-md-3">
+      <div class="panel">
+          <div class="user-heading round">
+              <a href="#">
+                  <img src="{{user.setting.avatar.url}}" alt="">
+              </a>
+              <h1>{{user.first_name}} {{user.last_name}}</h1>
+              <strong><p>@{{user.username}}</p></strong>
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+              <li class="active"><a href="#"> <i class="fa fa-user"></i> Profile</a></li>
+              <li><a href="{% url 'update-user' user.id %}"> <i class="fa fa-edit"></i> Edit profile</a></li>
+          </ul>
+      </div>
+  </div>
+  <div class="profile-info col-md-9">
+
+      <div class="panel">
+        <h2>About</h2>
+          <div class="bio-graph-heading">
+            {{user.setting.bio}}
+          </div>
+          <div class="panel-body bio-graph-info">
+              <h2>Bio Graph</h2>
+              <div class="row">
+                  <div class="bio-row">
+                      <p><span>First Name </span>: {{user.first_name}}</p>
+                  </div>
+                  <div class="bio-row">
+                      <p><span>Last Name </span>: {{user.last_name}}</p>
+                  </div>
+                  <div class="bio-row">
+                      <p><span>Username </span>: {{user.username}}</p>
+                  </div>
+                  <div class="bio-row">
+                      <p><span>Email </span>: {{user.email}}</p>
+                  </div>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+{% endblock %}
